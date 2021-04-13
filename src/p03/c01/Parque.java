@@ -21,7 +21,7 @@ public class Parque implements IParque{
 
 	@Override
 	//si no hay adaptador falta algo que sirva como pa eso
-	public void entrarAlParque(String puerta){		// TODO
+	public synchronized void entrarAlParque(String puerta){		// TODO
 		
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
@@ -47,10 +47,10 @@ public class Parque implements IParque{
 	}
 	
 	
-	public void salirDelParque(String puerta) {
+	public synchronized void salirDelParque(String puerta) {
 		// Si no hay entradas por esa puerta, inicializamos				
 		// TODO
-		int personasA = 0, personasB = 0;	
+		int personasA = 0, personasB=0;	
 			
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
