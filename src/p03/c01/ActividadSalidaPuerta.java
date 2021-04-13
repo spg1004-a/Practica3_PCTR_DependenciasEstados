@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 public class ActividadSalidaPuerta implements Runnable{
 
 	private static final int NUMSALIDAS = 20;
+	
 	private String puerta;
 	private IParque parque;
 
