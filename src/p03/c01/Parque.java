@@ -21,12 +21,13 @@ public class Parque implements IParque{
 
 	@Override
 	//si no hay adaptador falta algo que sirva como pa eso
-	public synchronized void entrarAlParque(String puerta) throws InterruptedException{		// TODO
-		comprobarAntesDeEntrar(puerta);
+	public synchronized void entrarAlParque(String puerta) {		// TODO
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
+		
+		comprobarAntesDeEntrar(puerta);
 		
 		// TODO
 			
@@ -40,19 +41,17 @@ public class Parque implements IParque{
 		imprimirInfo(puerta, "Entrada");
 		
 		// TODO
-		System.out.println("Puerta: "+puerta+" Contador de dicha puerta: "+contadoresPersonasPuerta.get(puerta));
 		checkInvariante();
 		
 		// TODO
-		
+		notify();
 	}
 	
 	
-	public synchronized void salirDelParque(String puerta) throws InterruptedException {
+	public synchronized void salirDelParque(String puerta)  {
 		// Si no hay entradas por esa puerta, inicializamos				
 		// TODO
 		comprobarAntesDeSalir(puerta);
-		int personasA = 0, personasB=0;	
 			
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
@@ -62,7 +61,6 @@ public class Parque implements IParque{
 		imprimirInfo(puerta, "Entrada");
 				
 		// TODO
-		System.out.println("Puerta: "+puerta+" Contador de dicha puerta: "+contadoresPersonasPuerta.get(puerta));
 		checkInvariante();
 		
 	}
@@ -95,17 +93,26 @@ public class Parque implements IParque{
 	}
 
 	
-	protected void comprobarAntesDeEntrar(String puerta) throws InterruptedException{	
+	protected void comprobarAntesDeEntrar(String puerta) {	
 		// assert variables de que haya hueco intuyo
-		while( contadoresPersonasPuerta.get(puerta) <= NUMENTRADAS && contadorPersonasTotales < NUMPERSONASMAX )
-			wait();
-	}
+		if( contadoresPersonasPuerta.get(puerta) > NUMENTRADAS && contadorPersonasTotales < NUMPERSONASMAX )
+			try {
+				wait();
+			}
+			catch(Exception e) {
+				System.out.println("Interrupted Exception");
+			}
+		}
 
-	protected void comprobarAntesDeSalir(String puerta) throws InterruptedException{	
+	protected void comprobarAntesDeSalir(String puerta) {	
 		// assert variables de que haya 
-		while(contadoresPersonasPuerta.get(puerta) == 0  )
-			wait();
-		
+		if(contadoresPersonasPuerta.get(puerta) == 0  )
+			try {
+				wait();
+			}
+			catch(Exception e) {
+				System.out.println("Interrupted Exception");
+			}
 	}
 
 
