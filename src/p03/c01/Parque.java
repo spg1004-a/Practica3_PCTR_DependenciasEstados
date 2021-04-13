@@ -8,7 +8,8 @@ public class Parque implements IParque{
 	// TODO 
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
-	private static final int NUMPERSONAS = 50;
+	private static final int NUMPERSONASMAX = 50, 
+							 NUMENTRADAS = 20;
 	
 	
 	public Parque() {	// TODO
@@ -28,7 +29,7 @@ public class Parque implements IParque{
 		}
 		
 		// TODO
-		int personasA = 0, personasB = 0;	
+			
 		
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
@@ -92,10 +93,12 @@ public class Parque implements IParque{
 	
 	protected void comprobarAntesDeEntrar(String puerta){	// TODO
 		// assert variables de que haya hueco intuyo
+		assert sumarContadoresPuerta() <= NUMENTRADAS && contadorPersonasTotales < NUMPERSONASMAX ;
 	}
 
 	protected void comprobarAntesDeSalir(String puerta){		// TODO
 		// assert variables de que haya 
+		assert contadorPersonasTotales > 1 ; 
 	}
 
 
