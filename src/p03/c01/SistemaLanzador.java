@@ -17,6 +17,7 @@ public class SistemaLanzador {
 			new Thread (entradas).start();
 			new Thread (salidas).start();
 			
+			
 			// 
 			// TODO inicar hilos
 			
