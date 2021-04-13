@@ -39,6 +39,7 @@ public class Parque implements IParque{
 		imprimirInfo(puerta, "Entrada");
 		
 		// TODO
+		System.out.println("Puerta: "+puerta+" Contador de dicha puerta: "+contadoresPersonasPuerta.get(puerta));
 		checkInvariante();
 		
 		// TODO
@@ -59,6 +60,7 @@ public class Parque implements IParque{
 		imprimirInfo(puerta, "Entrada");
 				
 		// TODO
+		System.out.println("Puerta: "+puerta+" Contador de dicha puerta: "+contadoresPersonasPuerta.get(puerta));
 		checkInvariante();
 		
 	}
