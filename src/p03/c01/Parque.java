@@ -31,6 +31,7 @@ public class Parque implements IParque{
 		// TODO
 			
 		
+		
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
