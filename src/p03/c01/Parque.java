@@ -95,7 +95,7 @@ public class Parque implements IParque{
 	
 	protected void comprobarAntesDeEntrar(String puerta) {	
 		// assert variables de que haya hueco intuyo
-		if( contadoresPersonasPuerta.get(puerta) > NUMENTRADAS && contadorPersonasTotales < NUMPERSONASMAX )
+		if( contadoresPersonasPuerta.get(puerta) > NUMENTRADAS && contadorPersonasTotales > NUMPERSONASMAX )
 			try {
 				wait();
 			}
