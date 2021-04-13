@@ -5,7 +5,6 @@ import java.util.Hashtable;
 
 public class Parque implements IParque{
 
-
 	// TODO 
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
@@ -19,6 +18,7 @@ public class Parque implements IParque{
 
 
 	@Override
+	//si no hay adaptador falta algo que sirva como pa eso
 	public void entrarAlParque(String puerta){		// TODO
 		
 		// Si no hay entradas por esa puerta, inicializamos
@@ -27,7 +27,7 @@ public class Parque implements IParque{
 		}
 		
 		// TODO
-				
+		int personasA = 0, personasB = 0;	
 		
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
@@ -37,15 +37,29 @@ public class Parque implements IParque{
 		imprimirInfo(puerta, "Entrada");
 		
 		// TODO
-		
+		checkInvariante();
 		
 		// TODO
 		
 	}
 	
-	// 
-	// TODO Método salirDelParque
-	//
+	
+	public void salirDelParque(String puerta) {
+		// Si no hay entradas por esa puerta, inicializamos				
+		// TODO
+		int personasA = 0, personasB = 0;	
+			
+		// Aumentamos el contador total y el individual
+		contadorPersonasTotales++;		
+		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
+				
+		// Imprimimos el estado del parque
+		imprimirInfo(puerta, "Entrada");
+				
+		// TODO
+		checkInvariante();
+		
+	}
 	
 	
 	private void imprimirInfo (String puerta, String movimiento){
@@ -74,16 +88,13 @@ public class Parque implements IParque{
 		// TODO
 	}
 
-	protected void comprobarAntesDeEntrar(){	// TODO
-		//
-		// TODO
-		//
+	
+	protected void comprobarAntesDeEntrar(String puerta){	// TODO
+		// assert variables de que haya hueco intuyo
 	}
 
-	protected void comprobarAntesDeSalir(){		// TODO
-		//
-		// TODO
-		//
+	protected void comprobarAntesDeSalir(String puerta){		// TODO
+		// assert variables de que haya 
 	}
 
 
