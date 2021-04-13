@@ -21,8 +21,8 @@ public class Parque implements IParque{
 
 	@Override
 	//si no hay adaptador falta algo que sirva como pa eso
-	public synchronized void entrarAlParque(String puerta){		// TODO
-		
+	public synchronized void entrarAlParque(String puerta) throws InterruptedException{		// TODO
+		comprobarAntesDeEntrar(puerta);
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
@@ -48,9 +48,10 @@ public class Parque implements IParque{
 	}
 	
 	
-	public synchronized void salirDelParque(String puerta) {
+	public synchronized void salirDelParque(String puerta) throws InterruptedException {
 		// Si no hay entradas por esa puerta, inicializamos				
 		// TODO
+		comprobarAntesDeSalir(puerta);
 		int personasA = 0, personasB=0;	
 			
 		// Aumentamos el contador total y el individual
@@ -94,14 +95,17 @@ public class Parque implements IParque{
 	}
 
 	
-	protected void comprobarAntesDeEntrar(String puerta){	// TODO
+	protected void comprobarAntesDeEntrar(String puerta) throws InterruptedException{	
 		// assert variables de que haya hueco intuyo
-		assert sumarContadoresPuerta() <= NUMENTRADAS && contadorPersonasTotales < NUMPERSONASMAX ;
+		while( contadoresPersonasPuerta.get(puerta) <= NUMENTRADAS && contadorPersonasTotales < NUMPERSONASMAX )
+			wait();
 	}
 
-	protected void comprobarAntesDeSalir(String puerta){		// TODO
+	protected void comprobarAntesDeSalir(String puerta) throws InterruptedException{	
 		// assert variables de que haya 
-		assert contadorPersonasTotales > 1 ; 
+		while(contadoresPersonasPuerta.get(puerta) == 0  )
+			wait();
+		
 	}
 
 
