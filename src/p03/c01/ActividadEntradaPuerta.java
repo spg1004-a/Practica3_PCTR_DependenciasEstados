@@ -1,9 +1,15 @@
 package src.p03.c01;
-
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+/**
+ * Introduce hilos en el parque.
+ * 
+ * @author Martin Gonzalez y Sergio Pino
+ * @version 1.0 
+ * @see src.p03.c01.ActividadEntradaPuerta
+ */
 
 public class ActividadEntradaPuerta implements Runnable{
 
@@ -15,6 +21,7 @@ public class ActividadEntradaPuerta implements Runnable{
 			this.puerta = puerta;
 			this.parque = parque;
 		}
+		
 
 		@Override
 		public void run() {
@@ -29,5 +36,4 @@ public class ActividadEntradaPuerta implements Runnable{
 				}
 			}
 		}
-
 }
