@@ -2,6 +2,8 @@ package src.p03.c01;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Parque implements IParque{
 
@@ -34,7 +36,7 @@ public class Parque implements IParque{
 		
 		
 		// Aumentamos el contador total y el individual
-		contadorPersonasTotales++;		
+		contadorPersonasTotales++;	
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
 		
 		// Imprimimos el estado del parque
@@ -54,7 +56,7 @@ public class Parque implements IParque{
 		comprobarAntesDeSalir(puerta);
 			
 		// Aumentamos el contador total y el individual
-		contadorPersonasTotales++;		
+		contadorPersonasTotales--;		
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
 				
 		// Imprimimos el estado del parque
@@ -63,6 +65,7 @@ public class Parque implements IParque{
 		// TODO
 		checkInvariante();
 		
+		notify();
 	}
 	
 	
@@ -90,28 +93,34 @@ public class Parque implements IParque{
 		assert sumarContadoresPuerta() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
 		// TODO 
 		// TODO
+//		Set<String> keys = contadoresPersonasPuerta.keySet();
+//		Iterator<String> itr = keys.iterator();
+//		while (itr.hasNext()){
+//			String key = (String) itr.next();
+//			sumarPersonasPuertas += contadoresPersonasPuerta.get(keys);
+//		}
 	}
 
 	
 	protected void comprobarAntesDeEntrar(String puerta) {	
 		// assert variables de que haya hueco intuyo
-		if( contadoresPersonasPuerta.get(puerta) > NUMENTRADAS && contadorPersonasTotales > NUMPERSONASMAX )
+		if( contadoresPersonasPuerta.get(puerta) > NUMENTRADAS || contadorPersonasTotales > NUMPERSONASMAX )
 			try {
 				wait();
 			}
 			catch(Exception e) {
-				System.out.println("Interrupted Exception");
+				System.out.println("Intenta entrar al tope");
 			}
 		}
 
 	protected void comprobarAntesDeSalir(String puerta) {	
 		// assert variables de que haya 
-		if(contadoresPersonasPuerta.get(puerta) == 0  )
+		if(contadoresPersonasPuerta.get(puerta) <= 0  )
 			try {
 				wait();
 			}
 			catch(Exception e) {
-				System.out.println("Interrupted Exception");
+				System.out.println("Intenta salir con 0");
 			}
 	}
 
