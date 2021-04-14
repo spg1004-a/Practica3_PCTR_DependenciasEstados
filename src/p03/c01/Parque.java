@@ -11,16 +11,15 @@ import java.util.Hashtable;
 
 public class Parque implements IParque{
 
-	private int contadorPersonasTotales;
+	private int contadorPersonasTotales, i=0;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
-	private static final int NUMPERSONASMAX = 50, 
-							 NUMENTRADAS = 20;
+	private static final int NUMPERSONASMAX = 50;
+							
 	
 	
 	public Parque() {	
 		contadorPersonasTotales = 0;
-		contadoresPersonasPuerta = new Hashtable<String, Integer>();
-		
+		contadoresPersonasPuerta = new Hashtable<String, Integer>();	
 	}
 
 
@@ -31,32 +30,31 @@ public class Parque implements IParque{
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
 		
-		comprobarAntesDeEntrar(puerta);
-		contadorPersonasTotales++;	
-		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
+		comprobarAntesDeEntrar();
 		
+		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
+		contadorPersonasTotales++;	
 		imprimirInfo(puerta, "Entrada");
+		notifyAll();
 		checkInvariante();
-		notify();
 		
 	}
 	
 	
 	public synchronized void salirDelParque(String puerta)  {	
-		comprobarAntesDeSalir(puerta);
-		contadorPersonasTotales--;		
+		comprobarAntesDeSalir();
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
-		
-		imprimirInfo(puerta, "Entrada");	
-		checkInvariante();
-		notify();
+		contadorPersonasTotales--;	
+		imprimirInfo(puerta, "Salida");	
+		notifyAll();
+		checkInvariante();	
 	}
 	
 	
 	private void imprimirInfo (String puerta, String movimiento){	
+		System.out.println("Veces ejecutado:" + ++i);
 		System.out.println(movimiento + " por puerta " + puerta);
 		System.out.println("--> Personas en el parque " + contadorPersonasTotales); 
-		
 		
 		for(String p: contadoresPersonasPuerta.keySet()){
 			System.out.println("----> Por puerta " + p + " " + contadoresPersonasPuerta.get(p));
@@ -83,8 +81,8 @@ public class Parque implements IParque{
 	}
 
 	
-	protected void comprobarAntesDeEntrar(String puerta) {	
-		if( contadoresPersonasPuerta.get(puerta) > NUMENTRADAS || contadorPersonasTotales > NUMPERSONASMAX )
+	protected synchronized void comprobarAntesDeEntrar() {	
+		if( contadorPersonasTotales >= NUMPERSONASMAX )
 			try {
 				wait();
 			}
@@ -94,8 +92,8 @@ public class Parque implements IParque{
 		}
 	
 
-	protected void comprobarAntesDeSalir(String puerta) {	
-		if(contadoresPersonasPuerta.get(puerta) <= 0  )
+	protected synchronized void comprobarAntesDeSalir() {	
+		if(contadorPersonasTotales == 0  )
 			try {
 				wait();
 			}
@@ -103,6 +101,5 @@ public class Parque implements IParque{
 				System.out.println("Intenta salir con 0");
 			}
 	}
-
-
+	
 }
